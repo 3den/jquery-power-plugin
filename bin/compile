@@ -1,0 +1,2 @@
+coffee -clo js .
+cp -f js/lib/jquery.power_plugin.js index.js

@@ -1,7 +1,7 @@
 {
   "name": "jQuery.PowerPlugin",
   "version": "0.4.4",
-  "main": "jquery.power_plugin.js",
+  "main": "index.js",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -9,8 +9,5 @@
   ],
   "dependencies": {
     "jquery": "~2.0.1"
-  },
-  "devDependencies": {
-    "chai": "~1.6.0"
   }
 }

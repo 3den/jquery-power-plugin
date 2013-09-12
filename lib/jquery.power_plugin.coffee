@@ -1,6 +1,6 @@
 $ = jQuery
 
-# Public: PowerPlugin (0.4.3)
+# Public: PowerPlugin (0.5.0)
 #
 class $.PowerPlugin
   defaults: {}
@@ -17,35 +17,23 @@ class $.PowerPlugin
   @getInstance: (element, options) ->
     $element = $(element)
     data = $element.data(@pluginName)
-    if data
-      console.log data
-      data.setOptions(options)
-    else
+    unless data
       data = new @($element, options)
       $element.data(@pluginName, data)
     data
 
-  # Internal: creates a new plugin instance for the given element.
-  #
-  # element - DOM element or selector.
-  # options - custom options.
-  #
-  # Returns a new PowerPlugin instance.
   constructor: (element, options={}) ->
     @element = @el = $(element)
     @setOptions(options)
     @initialize()
 
-  # Public: changes the options.
-  #
-  # Returns nothing.
   setOptions: (options) ->
     @options = $.extend true, {}, @defaults, options
 
-  # Public: custom initialization.
+  # Public: custom initalization.
   #
   # Overload this method to load instance variables
-  # and/or to do other stuff during the initialization.
+  # and/or to do other stuff during the initalization.
   #
   # Returns nothing.
   initialize: ->
@@ -76,11 +64,8 @@ class $.PowerPlugin
   bindEvent: (event, callback) ->
     keys = event.split " "
     trigger = keys.shift()
-    selector = keys.join " "
-    if selector.length
-      @element.on trigger, selector, @eventCallback(callback)
-    else
-      @element.on trigger, @eventCallback(callback)
+    selector = "#{@element.selector} #{keys.join " "}"
+    $(document).on trigger, selector, @eventCallback(callback)
 
   # Internal: higher-order callback function.
   #
@@ -89,4 +74,4 @@ class $.PowerPlugin
   # Returns a callback function.
   eventCallback: (callback) ->
     that = this
-    (e) -> that[callback].call that, e
+    (args...) -> that[callback].apply that, args

@@ -1,12 +1,18 @@
 {
-  "name": "jQuery.PowerPlugin",
+  "name": "jquery-power-plugin",
   "version": "0.4.4",
+  "keywords": [
+    "jquery",
+    "component"
+  ],
   "main": "index.js",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
     "components"
   ],
+  "readmeFilename": "README.md",
   "dependencies": {
     "jquery": "~2.0.1"
   }

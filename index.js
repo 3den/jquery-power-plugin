@@ -64,8 +64,12 @@
       var keys, selector, trigger;
       keys = event.split(" ");
       trigger = keys.shift();
-      selector = "" + this.element.selector + " " + (keys.join(" "));
-      return $(document).on(trigger, selector, this.eventCallback(callback));
+      selector = keys.join(" ");
+      if (selector) {
+        return $(this.element).on(trigger, selector, this.eventCallback(callback));
+      } else {
+        return $(this.element).on(trigger, this.eventCallback(callback));
+      }
     };
 
     PowerPlugin.prototype.eventCallback = function(callback) {

@@ -1,6 +1,6 @@
 $ = jQuery
 
-# Public: PowerPlugin (0.5.0)
+# Public: PowerPlugin (0.5.1)
 #
 class $.PowerPlugin
   defaults: {}
@@ -62,10 +62,13 @@ class $.PowerPlugin
   #
   # Returns nothing.
   bindEvent: (event, callback) ->
-    keys = event.split " "
-    trigger = keys.shift()
-    selector = "#{@element.selector} #{keys.join " "}"
-    $(document).on trigger, selector, @eventCallback(callback)
+    keys      = event.split " "
+    trigger   = keys.shift()
+    selector  = keys.join " "
+    if selector
+      $(@element).on trigger, selector, @eventCallback(callback)
+    else
+      $(@element).on trigger, @eventCallback(callback)
 
   # Internal: higher-order callback function.
   #

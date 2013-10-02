@@ -16,22 +16,13 @@
       that = this;
       this.pluginName = name;
       return $.fn[this.pluginName] = function(options) {
-        var plugin;
-        plugin = that.getInstance(this, options);
-        plugin.bindEvents();
+        that.getInstance(this, options).bindEvents();
         return this;
       };
     };
 
     PowerPlugin.getInstance = function(element, options) {
-      var $element, data;
-      $element = $(element);
-      data = $element.data(this.pluginName);
-      if (!data) {
-        data = new this($element, options);
-        $element.data(this.pluginName, data);
-      }
-      return data;
+      return new this($(element), options);
     };
 
     function PowerPlugin(element, options) {

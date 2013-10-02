@@ -1,6 +1,6 @@
 $ = jQuery
 
-# Public: PowerPlugin (0.5.1)
+# Public: PowerPlugin (0.5.2)
 #
 class $.PowerPlugin
   defaults: {}
@@ -10,17 +10,11 @@ class $.PowerPlugin
     that = @
     @pluginName = name
     $.fn[@pluginName] = (options) ->
-      plugin = that.getInstance(this, options)
-      plugin.bindEvents()
+      that.getInstance(this, options).bindEvents()
       this
 
   @getInstance: (element, options) ->
-    $element = $(element)
-    data = $element.data(@pluginName)
-    unless data
-      data = new @($element, options)
-      $element.data(@pluginName, data)
-    data
+    new @($(element), options)
 
   constructor: (element, options={}) ->
     @element = @el = $(element)

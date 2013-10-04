@@ -1,25 +1,46 @@
 $ = jQuery
 
-# Public: PowerPlugin (0.5.2)
+# Public: PowerPlugin (0.5.3)
 #
 class $.PowerPlugin
   defaults: {}
   events: {}
 
-  @setup: (name) ->
+  # Public: Setup a jQuery plugin
+  #
+  # pluginName - the name of th plugin
+  # Overload this method to load instance variables
+  # and/or to do other stuff during the initalization.
+  #
+  # Examples
+  #
+  #   class MyPlugin extends $.PowerPlugin
+  #     ...
+  #
+  #   # gives a name to the plugin
+  #   MyPlugin.setup("myPlugin")
+  #
+  #   # attaches the plugin to an element
+  #   $(".some-elements").myPlugin()
+  #
+  #   # attaches the plugin and oveload default options
+  #   $(".other-elements").myPlugin
+  #     anOption: "something"
+  #     anOtherOption: "something else"
+  #     ...
+  #
+  # Returns plugin function
+  @setup: (pluginName) ->
     that = @
-    @pluginName = name
-    $.fn[@pluginName] = (options) ->
-      that.getInstance(this, options).bindEvents()
+    $.fn[pluginName] = (options) ->
+      new that(this, options)
       this
-
-  @getInstance: (element, options) ->
-    new @($(element), options)
 
   constructor: (element, options={}) ->
     @element = @el = $(element)
     @setOptions(options)
     @initialize()
+    @bindEvents()
 
   setOptions: (options) ->
     @options = $.extend true, {}, @defaults, options

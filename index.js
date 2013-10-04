@@ -11,18 +11,13 @@
 
     PowerPlugin.prototype.events = {};
 
-    PowerPlugin.setup = function(name) {
+    PowerPlugin.setup = function(pluginName) {
       var that;
       that = this;
-      this.pluginName = name;
-      return $.fn[this.pluginName] = function(options) {
-        that.getInstance(this, options).bindEvents();
+      return $.fn[pluginName] = function(options) {
+        new that(this, options);
         return this;
       };
-    };
-
-    PowerPlugin.getInstance = function(element, options) {
-      return new this($(element), options);
     };
 
     function PowerPlugin(element, options) {
@@ -32,6 +27,7 @@
       this.element = this.el = $(element);
       this.setOptions(options);
       this.initialize();
+      this.bindEvents();
     }
 
     PowerPlugin.prototype.setOptions = function(options) {
